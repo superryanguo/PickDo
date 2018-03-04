@@ -17,6 +17,11 @@ ocount=0
 acount=0
 bcount=0
 
+#make it beautiful
+DEFAULT=`echo "\033[m"`
+BLUE=`echo "\033[36m"`
+RED=`echo "\033[31m"`
+
 function picklistDelObjec()
 {
     echo ${FUNCNAME[0]}
@@ -35,12 +40,26 @@ function picklistAddObjec()
 function listPickedList()
 {
     echo ${FUNCNAME[0]}
-
+    local i; local o; local a; local b;
+    for i in ${pickIndex[@]}
+        do
+        o=${objectids[$i]}
+        a=${avalue[$i]}
+        b=${bvalue[$i]}
+        echo -e "${DEFAULT}${RED}$o${DEFAULT}---$a --- $b --- ${DEFAULT}"
+        done
 }
 
 function listTotalList()
 {
     echo ${FUNCNAME[0]}
+    local i; local o; local a; local b;
+     for ((i=0; i<$ocount; i++));do
+        o=${objectids[$i]}
+        a=${avalue[$i]}
+        b=${bvalue[$i]}
+        echo -e "${DEFAULT}${RED}$o${DEFAULT}---$a --- $b --- ${DEFAULT}"
+        done
 }
 
 # progressbar <current> <total>  
@@ -58,6 +77,18 @@ function progressbar()
 function initData()
 {
     echo ${FUNCNAME[0]}
+
+    objectids=($($actInput | awk -F\| 'NR!=1 && NR!=2 && NR!=3{print  $2 }'))
+    avalue=($($actInput | awk -F\| 'NR!=1 && NR!=2 && NR!=3{print  $3 }'| sed 's/[[:space:]]//g'))
+    bvalue=($($actInput | awk -F\| 'NR!=1 && NR!=2 && NR!=3{print  $4 }'| sed 's/[[:space:]]//g'))
+    ocount=${#objectids[@]}
+    acount=${#avalue[@]}
+    bcount=${#bvalue[@]}
+    pickIndex=(1 3 5 7 9)
+
+    if [ $ocount -ne $acount ] || [ $bcount -ne $ocount ];then
+        echo -e "${RED}COUNT MISMATCH! ERROR!${DEFAULT}"
+    fi
 }
 function cleanData()
 {
@@ -81,6 +112,7 @@ function main()
 {
 initData
 usage 
+listTotalList
 }
 
 main
