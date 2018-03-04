@@ -3,7 +3,9 @@
 #A script to pick and do your work
 
 actInput='cat ./sampleData/sample.log'
-#actInput='nova list'
+#actInput='nova show myComput'
+#actInput='openstack image list'
+#actInput='openstack image show myImage'
 
 #better use the unique id as the first value: objectids
 objectids=()
@@ -17,23 +19,28 @@ bcount=0
 
 function picklistDelObjec()
 {
+    echo ${FUNCNAME[0]}
 }
 
 function testAddDel()
 {
+    echo ${FUNCNAME[0]}
 }
 
 function picklistAddObjec()
 {
+    echo ${FUNCNAME[0]}
 }
 
 function listPickedList()
 {
+    echo ${FUNCNAME[0]}
 
 }
 
-function listtotaalList()
+function listTotalList()
 {
+    echo ${FUNCNAME[0]}
 }
 
 # progressbar <current> <total>  
@@ -50,9 +57,11 @@ function progressbar()
 
 function initData()
 {
+    echo ${FUNCNAME[0]}
 }
 function cleanData()
 {
+    echo ${FUNCNAME[0]}
     unset objectids
     unset avalue
     unset bvalue
@@ -64,12 +73,14 @@ function cleanData()
 }
 function usage()
 {
+    echo ${FUNCNAME[0]}
 
 }
 
 function main()
 {
 initData
+usage 
 }
 
 main
